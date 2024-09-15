@@ -6,13 +6,17 @@ import Root from "./Root/Root";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import Homepage from "./Pages/Homepage/Homepage";
+import Authprovider from "./Authprovider/Authprovider";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
     children: [
-      { path: "/", element: <Homepage></Homepage> },
+      {
+        path: "/",
+        element: <Authprovider element={<Homepage />} />,
+      },
       { path: "/register", element: <Register></Register> },
       { path: "/login", element: <Login></Login> },
     ],

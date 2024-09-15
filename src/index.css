@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.project-btn {
+  color: white;
+  background-color: #191970;
+  border-radius: 15px;
+  padding: 10px 20px;
+}

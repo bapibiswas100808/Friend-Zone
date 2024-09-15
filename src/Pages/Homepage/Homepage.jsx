@@ -1,7 +1,9 @@
 import React from "react";
 
 const Homepage = () => {
-  return <div>This is homepage</div>;
+  return (
+    <div className="max-w-[1170px] mx-auto min-h-screen">This is homepage</div>
+  );
 };
 
 export default Homepage;
