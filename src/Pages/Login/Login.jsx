@@ -1,39 +1,48 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { UserContext } from "../../Hooks/UserProvider/UserProvider";
 
 const Login = () => {
   const navigate = useNavigate();
-  const handleLogin = (e) => {
+  const { setUser } = useContext(UserContext);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     const user = { email, password };
-    axios
-      .post("http://localhost:5000/login", user)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Logged In Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((err) => {
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: `${err.response.data.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+    try {
+      const response = await axios.post("http://localhost:5000/login", user);
+      const { token, userId, username } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("username", username);
+      setUser({ id: userId, username: username });
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Logged In Successfully",
+        showConfirmButton: false,
+        timer: 1500,
       });
+
+      navigate("/");
+    } catch (err) {
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: `${err.response?.data?.message || "An error occurred"}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
+
   return (
     <div className="max-w-[1170px] mx-auto">
       <div className="hero min-h-screen">

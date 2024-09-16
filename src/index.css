@@ -5,6 +5,14 @@
 .project-btn {
   color: white;
   background-color: #191970;
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 10px 20px;
+}
+.project-btn:hover {
+  background-color: rgb(28, 81, 63);
+}
+@media (max-width: 400px) {
+  .project-btn {
+    padding: 8px 16px;
+  }
 }
