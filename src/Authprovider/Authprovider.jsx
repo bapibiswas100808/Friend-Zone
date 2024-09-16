@@ -18,7 +18,7 @@ const Authprovider = ({ element }) => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/verify-token",
+          "https://friend-zone-server.vercel.app/verify-token",
           {},
           {
             headers: {

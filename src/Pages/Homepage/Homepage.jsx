@@ -14,7 +14,7 @@ const Homepage = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users?search=${searchTerm}&excludeUserId=${userId}`
+          `https://friend-zone-server.vercel.app/users?search=${searchTerm}&excludeUserId=${userId}`
         );
         setUsers(response.data);
       } catch (error) {
@@ -29,7 +29,7 @@ const Homepage = () => {
     const fetchFriends = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/friends?userId=${userId}`
+          `https://friend-zone-server.vercel.app/friends?userId=${userId}`
         );
         setFriends(response.data);
       } catch (error) {
@@ -42,7 +42,7 @@ const Homepage = () => {
 
   const handleUnfriend = async (friendId) => {
     try {
-      await axios.post(`http://localhost:5000/unfriend`, {
+      await axios.post(`https://friend-zone-server.vercel.app/unfriend`, {
         userId,
         friendId,
       });

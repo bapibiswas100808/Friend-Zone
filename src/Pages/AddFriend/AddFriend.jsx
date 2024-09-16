@@ -15,7 +15,7 @@ const AddFriend = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users?search=${searchTerm}&excludeUserId=${userId}`
+          `https://friend-zone-server.vercel.app/users?search=${searchTerm}&excludeUserId=${userId}`
         );
         setUsers(response.data);
       } catch (error) {
@@ -31,7 +31,7 @@ const AddFriend = () => {
     const fetchFriendRequests = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/friend-requests?userId=${userId}`
+          `https://friend-zone-server.vercel.app/friend-requests?userId=${userId}`
         );
         setFriendRequests(response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const AddFriend = () => {
   //   Send Friend request
   const handleSendFriendRequest = async (friendId) => {
     try {
-      await axios.post(`http://localhost:5000/friend-request`, {
+      await axios.post(`https://friend-zone-server.vercel.app/friend-request`, {
         senderId: userId,
         recipientId: friendId,
       });
@@ -58,10 +58,13 @@ const AddFriend = () => {
   //   Accept Friend Request
   const handleAcceptRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:5000/accept-friend-request`, {
-        requestId,
-        userId,
-      });
+      await axios.post(
+        `https://friend-zone-server.vercel.app/accept-friend-request`,
+        {
+          requestId,
+          userId,
+        }
+      );
       Swal.fire("Friend request accepted!", "", "success");
       // Remove the accepted request from the list
       setFriendRequests((prevRequests) =>
@@ -75,10 +78,13 @@ const AddFriend = () => {
   //   Reject Friend request
   const handleRejectRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:5000/reject-friend-request`, {
-        requestId,
-        userId,
-      });
+      await axios.post(
+        `https://friend-zone-server.vercel.app/reject-friend-request`,
+        {
+          requestId,
+          userId,
+        }
+      );
       Swal.fire("Friend request rejected!", "", "success");
       // Remove the rejected request from the list
       setFriendRequests((prevRequests) =>

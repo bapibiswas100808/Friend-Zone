@@ -11,7 +11,7 @@ const Register = () => {
     const password = form.password.value;
     const user = { name, email, password };
     axios
-      .post("http://localhost:5000/register", user)
+      .post("https://friend-zone-server.vercel.app/register", user)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({

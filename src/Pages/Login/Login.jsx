@@ -16,7 +16,10 @@ const Login = () => {
     const user = { email, password };
 
     try {
-      const response = await axios.post("http://localhost:5000/login", user);
+      const response = await axios.post(
+        "https://friend-zone-server.vercel.app/login",
+        user
+      );
       const { token, userId, username } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
