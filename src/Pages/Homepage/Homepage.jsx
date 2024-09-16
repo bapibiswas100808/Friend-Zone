@@ -6,12 +6,10 @@ import { UserContext } from "../../Hooks/UserProvider/UserProvider";
 const Homepage = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [friends, setFriends] = useState([]);
   const { user } = useContext(UserContext);
-
-  // Use the actual logged-in user's ID
   const [userId, setUserId] = useState(user?.id);
 
-  // Fetch users and exclude the logged-in user
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -27,15 +25,34 @@ const Homepage = () => {
     fetchUsers();
   }, [searchTerm, userId]);
 
-  const handleSendFriendRequest = async (friendId) => {
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/friends?userId=${userId}`
+        );
+        setFriends(response.data);
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+      }
+    };
+
+    fetchFriends();
+  }, [userId]);
+
+  const handleUnfriend = async (friendId) => {
     try {
-      await axios.post(`http://localhost:5000/friend-request`, {
-        senderId: userId,
-        recipientId: friendId,
+      await axios.post(`http://localhost:5000/unfriend`, {
+        userId,
+        friendId,
       });
-      Swal.fire("Friend request sent!", "", "success");
+      Swal.fire("Unfriended successfully!", "", "success");
+      // Remove the unfriended user from the list
+      setFriends((prevFriends) =>
+        prevFriends.filter((friend) => friend._id !== friendId)
+      );
     } catch (error) {
-      Swal.fire("Friend request Already sent", "", "error");
+      Swal.fire("Error unfriending user", "", "error");
     }
   };
 
@@ -54,25 +71,42 @@ const Homepage = () => {
         className="input input-bordered w-full mb-4"
       />
 
-      <div>
-        {/* Users List */}
-        <h2 className="text-xl font-bold mb-2">All Users</h2>
-        <ul className="list-disc pl-5">
-          {users.map((user) => (
-            <li
-              key={user._id}
-              className="flex justify-between items-center mb-2"
-            >
-              {user.name}
-              <button
-                onClick={() => handleSendFriendRequest(user._id)}
-                className="btn btn-primary ml-2"
+      <div className="flex flex-col md:flex-row gap-10">
+        <div className="flex-1">
+          {/* Users List */}
+          <h2 className="text-xl font-bold mb-2">All Users</h2>
+          <ul className="list-disc pl-5">
+            {users.map((user) => (
+              <li
+                key={user._id}
+                className="flex justify-between items-center mb-2"
               >
-                Add Friend
-              </button>
-            </li>
-          ))}
-        </ul>
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex-1">
+          {/* Friends List */}
+          <h2 className="text-xl font-bold mb-2">Your Friends</h2>
+          <ul className="list-disc pl-5">
+            {friends.map((friend) => (
+              <li
+                key={friend._id}
+                className="flex justify-between items-center mb-2"
+              >
+                {friend.name}
+                <button
+                  onClick={() => handleUnfriend(friend._id)}
+                  className="btn btn-error ml-2"
+                >
+                  Unfriend
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
