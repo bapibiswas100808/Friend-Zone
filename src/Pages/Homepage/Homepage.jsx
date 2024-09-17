@@ -57,7 +57,7 @@ const Homepage = () => {
   };
 
   return (
-    <div className="max-w-[1170px] mx-auto py-10">
+    <div className="max-w-[1170px] mx-auto py-10 px-3 lg:px-0">
       <h1 className="text-2xl font-bold mb-4">
         Logged in User: {user?.username}
       </h1>

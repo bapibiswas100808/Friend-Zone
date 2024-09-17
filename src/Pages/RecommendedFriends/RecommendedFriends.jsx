@@ -21,7 +21,7 @@ const RecommendedFriends = () => {
   }, [user.id]);
 
   return (
-    <div className="max-w-[1170px] mx-auto py-10">
+    <div className="max-w-[1170px] mx-auto py-10 px-3 lg:px-0">
       <h2 className="text-2xl font-bold mb-4">User: {user.username}</h2>
       <table className="table-auto w-full">
         <thead>
