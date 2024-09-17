@@ -49,7 +49,7 @@ const Login = () => {
   return (
     <div className="max-w-[1170px] mx-auto">
       <div className="hero min-h-screen">
-        <div className="hero-content flex-col lg:flex-row">
+        <div className="hero-content flex-col-reverse lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
             <p className="py-6">
