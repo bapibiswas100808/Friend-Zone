@@ -23,34 +23,36 @@ const RecommendedFriends = () => {
   return (
     <div className="max-w-[1170px] mx-auto py-10 px-3 lg:px-0">
       <h2 className="text-2xl font-bold mb-4">User: {user.username}</h2>
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Mutual Friends</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td className="border px-4 py-2">{user.name}</td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2">
-                {user.mutualFriendsDetails.length > 0 ? (
-                  <ul>
-                    {user.mutualFriendsDetails.map((friend) => (
-                      <li key={friend._id}>{friend.name}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  "No mutual friends"
-                )}
-              </td>
+      <div className="overflow-x-auto">
+        <table className=" w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Mutual Friends</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td className="border px-4 py-2">{user.name}</td>
+                <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">
+                  {user.mutualFriendsDetails.length > 0 ? (
+                    <ul>
+                      {user.mutualFriendsDetails.map((friend) => (
+                        <li key={friend._id}>{friend.name}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "No mutual friends"
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
